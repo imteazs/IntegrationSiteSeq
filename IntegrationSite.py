@@ -16,8 +16,13 @@ if __name__ == '__main__' :
 
     args = parser.parse_args()
 
+    'output path'
     output = Path(args.gtf_path).parent.joinpath('result_seq.csv')
 
+    'load a temp dataframe and rename columns'
     integratedf = pd.read_csv(args.gtf_path, sep='\t', comment='#', header=None)
     gtf_columns = ['chr_name', 'source', 'feature_type', 'start', 'stop', 'score', 'strand', 'genom_phase', 'add_info']
     integratedf.columns = gtf_columns
+
+    'load genome as a dictionary to efficiently parse through'
+    genome_dict = SeqIO.to_dict(SeqIO.parse(args.genome_path, 'fasta'))
