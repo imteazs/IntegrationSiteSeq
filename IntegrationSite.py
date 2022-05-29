@@ -45,7 +45,6 @@ if __name__ == '__main__' :
     integratedf['pystart_next_stop_codon'] = integratedf['start_next_stop_codon'] - 1
 
     selectdf = IntegrationSite(integratedf)
-    selectdf.gtfdf.to_csv(output)
     selectdf.gtfdf['sequence'] = selectdf.gtfdf.apply(lambda x: selectdf.pullSeq(x['pystart_stop_codon'],
                                                                                  x['pystart_next_stop_codon'],
                                                                                  x['chr_name'], genome_dict), axis=1)
