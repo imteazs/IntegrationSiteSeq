@@ -55,9 +55,10 @@ if __name__ == '__main__' :
     selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['sequence'] != '']
     'Getting sequence length'
     selectdf.gtfdf['seq_len'] = selectdf.gtfdf['sequence'].apply(len)
-    'get lowercase nucleotides'
+    'Check whether sequences has lowercase nucleotides'
     selectdf.gtfdf['has_lowercase'] = selectdf.gtfdf['sequence'].str.contains('[atcg]')
     'filter on length size, keeping sequence length greather than 500 bases'
     selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['seq_len'] >= 500]
 
+    'save file'
     selectdf.gtfdf.to_csv(output, index=False)
