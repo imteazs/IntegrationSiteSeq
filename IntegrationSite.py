@@ -24,6 +24,7 @@ if __name__ == '__main__' :
     args = parser.parse_args()
 
     'output path'
+    output_unfilter = Path(args.gtf_path).parent.joinpath('result_seq_unfiltered.csv')
     output = Path(args.gtf_path).parent.joinpath('result_seq.csv')
 
     'load a temp dataframe and rename columns'
@@ -57,8 +58,11 @@ if __name__ == '__main__' :
     selectdf.gtfdf['seq_len'] = selectdf.gtfdf['sequence'].apply(len)
     'Check whether sequences has lowercase nucleotides'
     selectdf.gtfdf['has_lowercase'] = selectdf.gtfdf['sequence'].str.contains('[atcg]')
+    'Save unfilted csv'
+
+    selectdf.gtfdf.to_csv(output_unfilter, index=False)
     'filter on length size, keeping sequence length greather than 500 bases'
-    selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['seq_len'] >= 500]
+    selectdf.gtfdf = selectdf.gtfdf.loc[(selectdf.gtfdf['seq_len'] >= 500) & (selectdf.gtfdf['has_lowercase'] is True)]
 
     'save file'
     selectdf.gtfdf.to_csv(output, index=False)
