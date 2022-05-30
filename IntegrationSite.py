@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from Bio import SeqIO
 import argparse
@@ -49,4 +50,5 @@ if __name__ == '__main__' :
                                                                                  x['pystart_next_stop_codon'],
                                                                                  x['chr_name'], genome_dict), axis=1)
 
-    selectdf.gtfdf.to_csv(output, index=False)
+    selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['sequence'] != '']
+    selectdf.gtfdf.to_csv(output)
