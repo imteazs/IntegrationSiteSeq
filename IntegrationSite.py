@@ -46,9 +46,15 @@ if __name__ == '__main__' :
     integratedf['pystart_next_stop_codon'] = integratedf['start_next_stop_codon'] - 1
 
     selectdf = IntegrationSite(integratedf)
+    'Use the pullSeq function to get the sequence'
     selectdf.gtfdf['sequence'] = selectdf.gtfdf.apply(lambda x: selectdf.pullSeq(x['pystart_stop_codon'],
                                                                                  x['pystart_next_stop_codon'],
                                                                                  x['chr_name'], genome_dict), axis=1)
 
+    'remove null values'
     selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['sequence'] != '']
+    'Getting sequence length'
+    selectdf.gtfdf['seq_len'] = selectdf.gtfdf['sequence'].apply(len)
+    'filter on length size, keeping sequence length greather than 500 bases'
+    selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['seq_len'] >= 500]
     selectdf.gtfdf.to_csv(output)
