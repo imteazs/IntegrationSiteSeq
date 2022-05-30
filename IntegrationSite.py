@@ -57,4 +57,5 @@ if __name__ == '__main__' :
     selectdf.gtfdf['seq_len'] = selectdf.gtfdf['sequence'].apply(len)
     'filter on length size, keeping sequence length greather than 500 bases'
     selectdf.gtfdf = selectdf.gtfdf.loc[selectdf.gtfdf['seq_len'] >= 500]
-    selectdf.gtfdf.to_csv(output)
+
+    selectdf.gtfdf.to_csv(output, index=False)
