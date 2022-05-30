@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from Bio import SeqIO
 import argparse
@@ -9,6 +8,7 @@ class IntegrationSite:
     def __init__(self, gtfdf):
         self.gtfdf = gtfdf
 
+    'pull the sequence with the given start, stop, chr, and genome dictionary'
     def pullSeq(self, start, stop, chr_name, genedict):
         record = genedict[chr_name]
         seq = str(record.seq)[start:stop]
