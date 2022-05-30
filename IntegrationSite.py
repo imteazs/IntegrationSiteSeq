@@ -58,7 +58,7 @@ if __name__ == '__main__' :
     'Check whether sequences has lowercase nucleotides'
     selectdf.gtfdf['has_lowercase'] = selectdf.gtfdf['sequence'].str.contains('[atcg]')
     'Check if string starts with stop codon TAG, TAA, TGA'
-    selectdf.gtfdf['seq_starts_tag_taa_tga'] = selectdf.gtfdf['sequence'].str.contains('^(tag)|(taa)|(tga)')
-
+    selectdf.gtfdf['seq_starts_tag_taa_tga'] = selectdf.gtfdf['sequence'].str.contains('\A(tag)|\A(taa)|\A(tga)',
+                                                                                       case=False)
     'save file'
     selectdf.gtfdf.to_csv(output, index=False)
